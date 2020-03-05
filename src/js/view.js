@@ -3,14 +3,14 @@ import { h }from "virtual-dom";
 import { deleteMsg, inputMsg, addMsg } from "./update";
 
 const {
-    div, h1, button, pre,
+    section, div, h3, button, pre,
     form, label, input,
     table, th, tr, td, a
  } = hh(h);
 
 function view (change, model) {
-    return div( [
-            h1("Todo List"),
+    return section({ className: 'mw6 mw6-ns center sans-serif pa3 ph5-ns' }, [
+            h3({className: 'f3'},"✔️osu.io :: todo List"),
             taskForm(change, model),
             div([
                 taskTable(change, model)
@@ -29,6 +29,7 @@ function taskForm(change, model) {
             oninput: e => change(inputMsg(e.target.value))
           }),
         button({
+            className: 'br-pill',
             type: 'button',
             onclick: () => change(addMsg())
         }, "Save")
@@ -50,7 +51,7 @@ function taskRow(change) {
             td(task.name),
             td(task.done ? "Done":""),
             td([
-                button({onclick: () => change(deleteMsg(index))} , "Delete")
+                button({className: 'br-pill', onclick: () => change(deleteMsg(index))} , "Delete")
             ])
         ]);
     }

@@ -14,16 +14,16 @@ describe("App2 views", () => {
             change = () => {};
             html = createElement(view(change, model));
         });
-    
-        it("has a div wrapper", () => {
-            expect(html.nodeName).toBe("DIV");
+
+        it("has a section wrapper", () => {
+            expect(html.nodeName).toBe("SECTION");
         });
 
         it("has a title", () => {
             const title = html.childNodes[0];
 
-            expect(title.nodeName).toBe("H1");
-            expect(title.childNodes[0].data).toBe("Todo List");
+            expect(title.nodeName).toBe("H3");
+            expect(title.childNodes[0].data).toBe("✔️osu.io :: todo List");
         });
 
         it("has a form", () => {
