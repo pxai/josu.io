@@ -87,7 +87,7 @@ function watchFiles() {
 
 exports.css = css;
 exports.html = html;
-const build = series(clean, parallel(html, css, js));
 
+const build = series(clean, parallel(html, css, js));
 exports.default = series( build, parallel(watchFiles, browserSync));
-exports.build;
+exports.build = build;

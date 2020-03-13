@@ -4,7 +4,8 @@
   "description": "Josu todo list page",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha test/unit/**/*.spec.js"
+    "test": "npx mocha test/unit/**/*.spec.js",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
