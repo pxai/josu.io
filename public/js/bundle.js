@@ -1717,57 +1717,15 @@ function isArray(obj) {
 },{}],37:[function(require,module,exports){
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.view = view;
-exports.update = update;
-
-var _hyperscriptHelpers = _interopRequireDefault(require("hyperscript-helpers"));
-
-var _virtualDom = require("virtual-dom");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
-var _hh = (0, _hyperscriptHelpers["default"])(_virtualDom.h),
-    div = _hh.div,
-    p = _hh.p,
-    button = _hh.button;
-
-function view(change, model) {
-  return div({
-    style: "background-color: ".concat(model)
-  }, [p("Selected color: ".concat(model)), div([button({
-    onclick: function onclick() {
-      return change("red");
-    }
-  }, 'Set Red'), button({
-    onclick: function onclick() {
-      return change("green");
-    }
-  }, 'Set Green'), button({
-    onclick: function onclick() {
-      return change("blue");
-    }
-  }, 'Set Blue')])]);
-}
-
-function update(value, model) {
-  if (["red", "green", "blue"].includes(value)) {
-    return value;
-  }
-
-  return model;
-}
-
-},{"hyperscript-helpers":4,"virtual-dom":11}],38:[function(require,module,exports){
-"use strict";
-
 var _virtualDom = require("virtual-dom");
 
 var _createElement = _interopRequireDefault(require("virtual-dom/create-element"));
 
-var _app = require("./app");
+var _model = _interopRequireDefault(require("./model"));
+
+var _view = _interopRequireDefault(require("./view"));
+
+var _update = _interopRequireDefault(require("./update"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -1787,8 +1745,179 @@ function init(initModel, update, view, node) {
 }
 
 var rootNode = document.getElementById("app");
-init("orange", _app.update, _app.view, rootNode);
+init(_model["default"], _update["default"], _view["default"], rootNode);
 
-},{"./app":37,"virtual-dom":11,"virtual-dom/create-element":8}]},{},[38]);
+},{"./model":38,"./update":39,"./view":40,"virtual-dom":11,"virtual-dom/create-element":8}],38:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+var initModel = {
+  tasks: [{
+    name: "Do something",
+    done: false
+  }, {
+    name: "Take a rest",
+    done: false
+  }],
+  name: '',
+  done: false
+};
+var _default = initModel;
+exports["default"] = _default;
+
+},{}],39:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deleteMsg = deleteMsg;
+exports.inputMsg = inputMsg;
+exports.addMsg = addMsg;
+exports.update = update;
+exports["default"] = exports.MSG = void 0;
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var MSG = {
+  ADD: "add",
+  DEL: "delete",
+  INPUT: "input"
+};
+exports.MSG = MSG;
+
+function deleteMsg(index) {
+  return {
+    type: MSG.DEL,
+    index: index
+  };
+}
+
+function inputMsg(text) {
+  return {
+    type: MSG.INPUT,
+    text: text
+  };
+}
+
+function addMsg() {
+  return {
+    type: MSG.ADD
+  };
+}
+
+function update(msg, model) {
+  switch (msg.type) {
+    case MSG.DEL:
+      return _objectSpread({}, model, {
+        tasks: model.tasks.filter(function (task, i) {
+          return i !== msg.index;
+        })
+      });
+
+    case MSG.INPUT:
+      return _objectSpread({}, model, {
+        name: msg.text
+      });
+
+    case MSG.ADD:
+      var task = {
+        name: model.name,
+        done: false
+      };
+      return _objectSpread({}, model, {
+        tasks: [].concat(_toConsumableArray(model.tasks), [task])
+      });
+
+    default:
+      return model;
+  }
+}
+
+var _default = update;
+exports["default"] = _default;
+
+},{}],40:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var _hyperscriptHelpers = _interopRequireDefault(require("hyperscript-helpers"));
+
+var _virtualDom = require("virtual-dom");
+
+var _update = require("./update");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _hh = (0, _hyperscriptHelpers["default"])(_virtualDom.h),
+    div = _hh.div,
+    h1 = _hh.h1,
+    button = _hh.button,
+    pre = _hh.pre,
+    form = _hh.form,
+    label = _hh.label,
+    input = _hh.input,
+    table = _hh.table,
+    th = _hh.th,
+    tr = _hh.tr,
+    td = _hh.td,
+    a = _hh.a;
+
+function view(change, model) {
+  return div([h1("Todo List"), taskForm(change, model), div([taskTable(change, model)]), div([pre(JSON.stringify(model, false, 2))])]);
+}
+
+function taskForm(change, model) {
+  return form([label("task"), input({
+    type: 'text',
+    value: model.task,
+    oninput: function oninput(e) {
+      return change((0, _update.inputMsg)(e.target.value));
+    }
+  }), button({
+    type: 'button',
+    onclick: function onclick() {
+      return change((0, _update.addMsg)());
+    }
+  }, "Save")]);
+}
+
+function taskTable(change, model) {
+  return table([tr([th("Task"), th("Done"), th("Del")]), model.tasks.map(taskRow(change))]);
+}
+
+function taskRow(change) {
+  return function (task, index) {
+    return tr([td(task.name), td(task.done ? "Done" : ""), td([button({
+      onclick: function onclick() {
+        return change((0, _update.deleteMsg)(index));
+      }
+    }, "Delete")])]);
+  };
+}
+
+var _default = view;
+exports["default"] = _default;
+
+},{"./update":39,"hyperscript-helpers":4,"virtual-dom":11}]},{},[37]);
 
 //# sourceMappingURL=maps/bundle.js.map
