@@ -31,5 +31,17 @@ describe("App2 views", () => {
 
             expect(form.nodeName).toBe("FORM");
         });
+
+        it("has an input type text", () => {
+            const form = html.childNodes[1];
+
+            expect(form.childNodes[0].nodeName).toBe("INPUT");
+        });
+
+        it("has a button", () => {
+            const form = html.childNodes[1];
+
+            expect(form.childNodes[1].nodeName).toBe("BUTTON");
+        });
     });
 });
