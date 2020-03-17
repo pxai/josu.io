@@ -23,7 +23,7 @@ describe("App2 views", () => {
             const title = html.childNodes[0];
 
             expect(title.nodeName).toBe("H3");
-            expect(title.childNodes[0].data).toBe("✔️osu.io :: todo List");
+            expect(title.childNodes[0].data).toBe(String.fromCodePoint(0x2714) + "osu.io todo list");
         });
 
         it("has a form", () => {
