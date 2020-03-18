@@ -3,7 +3,7 @@ import view from "../../src/js/view";
 import defaultModel from "../../src/js/model";
 import createElement from "virtual-dom/create-element";
 
-describe("App2 views", () => {
+describe("Josu.io views", () => {
     let change;
     let model;
     let html;
@@ -28,10 +28,10 @@ describe("App2 views", () => {
             expect(html.childNodes[1].childNodes[1].data).toBe("osu.io todo list");
         });
 
-        it("has a form", () => {
+        it("has a wrapper div", () => {
             const form = html.childNodes[2];
 
-            expect(form.nodeName).toBe("FORM");
+            expect(form.nodeName).toBe("DIV");
         });
 
         it("has an input type text", () => {

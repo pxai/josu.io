@@ -2,7 +2,7 @@ import expect from "expect";
 import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, MSG } from "../../src/js/update";
 import defaultModel from "../../src/js/model";
 
-describe("App2 update", () => {
+describe("Josu.io update", () => {
     let change;
     let model;
     let html;
