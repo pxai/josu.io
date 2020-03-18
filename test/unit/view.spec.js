@@ -22,27 +22,29 @@ describe("App2 views", () => {
         it("has a title", () => {
             const title = html.childNodes[0];
 
-            expect(title.nodeName).toBe("H3");
+            expect(title.nodeName).toBe("DIV");
             expect(title.childNodes[0].nodeName).toBe("IMG");
-            expect(title.childNodes[1].data).toBe("osu.io todo list");
+            expect(html.childNodes[1].nodeName).toBe("H3");
+            expect(html.childNodes[1].childNodes[1].data).toBe("osu.io todo list");
         });
 
         it("has a form", () => {
-            const form = html.childNodes[1];
+            const form = html.childNodes[2];
 
             expect(form.nodeName).toBe("FORM");
         });
 
         it("has an input type text", () => {
-            const form = html.childNodes[1];
+            const form = html.childNodes[2];
 
-            expect(form.childNodes[0].nodeName).toBe("INPUT");
+            expect(form.childNodes[0].nodeName).toBe("DIV");
+            expect(form.childNodes[0].childNodes[0].nodeName).toBe("INPUT");
         });
 
         it("has a button", () => {
-            const form = html.childNodes[1];
+            const form = html.childNodes[2];
 
-            expect(form.childNodes[1].nodeName).toBe("IMG");
+            expect(form.childNodes[0].childNodes[1].nodeName).toBe("IMG");
         });
     });
 });
