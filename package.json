@@ -1,0 +1,24 @@
+{
+  "name": "josu.io",
+  "version": "1.0.0",
+  "description": "Josu todo list page",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pxai/josu.io.git"
+  },
+  "keywords": [
+    "josu.io",
+    "todo",
+    "list"
+  ],
+  "author": "Pello Xabier Altadill IZura",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pxai/josu.io/issues"
+  },
+  "homepage": "https://github.com/pxai/josu.io#readme"
+}
