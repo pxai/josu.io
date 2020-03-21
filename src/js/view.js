@@ -10,7 +10,8 @@ const {
 
 function view (change, model) {
     return section({ className: 'center sans-serif pa3 ph5-ns' }, [
-            h3({className: 'f3'}, ([
+            div ({className:'flex'},[img({src: 'icons/checklist.svg', className:' bg-white center br-100 pa1 ba b--black-10 h3 w3'})]),
+            h3({className: 'f3 tc'}, ([
                 img({src: 'icons/check.svg'}),
                 "osu.io todo list"
             ])),
@@ -25,20 +26,22 @@ function view (change, model) {
 
 function taskForm(change, model) {
     return form({className: 'flex'},[
-        input({
-            type: 'text',
-            className: 'pa1 ma1',
-            value: model.task,
-            size: 50,
-            placeholder: 'Write your task here...',
-            oninput: e => change(inputMsg(e.target.value))
-          }),
-        img({
-            className: 'br-pill pointer dim pa2 grow',
-            type: 'button',
-            src: 'icons/plus.svg',
-            onclick: () => change(addMsg())
-        })
+        div ({className: 'pa1 ma1 w-100'},[
+            input({
+                type: 'text',
+                className: 'pa2 w-90 ba b b--white bg-white',
+                value: model.task,
+                size: 50,
+                placeholder: 'Write your task here...',
+                oninput: e => change(inputMsg(e.target.value))
+              }),
+            img({
+                className: 'pointer dim pl2 pt2 dib w-5 grow',
+                type: 'button',
+                src: 'icons/plus.svg',
+                onclick: () => change(addMsg())
+            })
+        ])
     ]);
 }
 
@@ -50,13 +53,13 @@ function taskTable(change, model) {
 
 function taskRow(change) {
     return function (task, index) {
-        return div({className: 'shadow-4 pa2 ma1 flex dim ' + (task.done ? 'bg-washed-green' : 'bg-washed-red') },[
+        return div({className: 'shadow-4 pa2 ma2 pv1 flex dim ' + (task.done ? '' : 'bg-white') },[
             div({className: 'pa1 ma1 fl w-5'}, [
                 img({className: 'br-pill pointer', onclick: () => change(markDoneMsg(index)), src: task.done ? 'icons/check.svg':'icons/plus.svg'} )
             ]),
             div({className: 'pa1 ma1 fl w-90 gray ' + (task.done ? 'strike':'')},task.name),
             div({className: 'pa1 ma1 fl w-5'}, [
-                img({className: 'br-pill pointer', onclick: () => change(deleteMsg(index)), src: 'icons/kebab-vertical.svg'})
+                img({className: 'br-pill pointer', title: 'Delete!', onclick: () => change(deleteMsg(index)), src: 'icons/kebab-vertical.svg'})
             ])
         ]);
     }
