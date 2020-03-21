@@ -37,7 +37,7 @@ export function update(msg, model) {
         case MSG.DEL:
             return {
                 ...model,
-                tasks: model.tasks.filter((task, i) => i !== msg.index)
+                tasks: model.tasks.filter((task, i) => i !== msg.index).sort((t1,t2) => t1.done-t2.done )
             };
         case MSG.INPUT:
             return { ...model, name: msg.text }
@@ -45,10 +45,10 @@ export function update(msg, model) {
             const task = { name: model.name, done: false };
             return {
                 ...model,
-                tasks: [...model.tasks, task]
+                tasks: [...model.tasks, task].sort((t1,t2) => t1.done-t2.done )
             };
         case MSG.DONE:
-            const tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, done: !task.done});
+            const tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, done: !task.done}).sort((t1,t2) => t1.done-t2.done );
             return {...model, tasks };
         default:
             return model;
