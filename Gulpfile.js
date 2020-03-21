@@ -16,14 +16,15 @@ function html() {
     .pipe(dest('public'))
 }
 
+function icons() {
+  return src('src/icons/*.svg')
+    .pipe(dest('public/icons'))
+}
+
 function css() {
   return src('src/**/css/*.css')
     .pipe(minifyCSS())
     .pipe(dest('public'))
-}
-
-async function allJs () {
-  return await projects.forEach( project => js(project));
 }
 
 function js() {
@@ -81,6 +82,7 @@ function watchFiles() {
   watch("./Gulpfile.js", series(build, browserSyncReload ));
   watch("./src/**/js/*", series(build, browserSyncReload ));
   watch("./src/index.html", series(html, browserSyncReload ));
+  watch("./src/icons/*", series(icons, browserSyncReload ));
   watch("./src/**/css/*", series(css, browserSyncReload ));
   watch("./test/**/*.spec.js", test)
 }
@@ -88,6 +90,6 @@ function watchFiles() {
 exports.css = css;
 exports.html = html;
 
-const build = series(clean, parallel(html, css, js));
+const build = series(clean, parallel(html, icons, css, js));
 exports.default = series( build, parallel(watchFiles, browserSync));
 exports.build = build;

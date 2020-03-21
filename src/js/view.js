@@ -4,13 +4,16 @@ import { deleteMsg, inputMsg, addMsg, markDoneMsg } from "./update";
 
 const {
     section, div, h3, button, pre,
-    form, label, input,
+    form, img, input,
     span, a
  } = hh(h);
 
 function view (change, model) {
     return section({ className: 'center sans-serif pa3 ph5-ns' }, [
-            h3({className: 'f3'}, String.fromCodePoint(0x2714) + "osu.io todo list"),
+            h3({className: 'f3'}, ([
+                img({src: 'icons/check.svg'}),
+                "osu.io todo list"
+            ])),
             taskForm(change, model),
             div([
                 taskTable(change, model)
@@ -26,14 +29,16 @@ function taskForm(change, model) {
             type: 'text',
             className: 'pa1 ma1',
             value: model.task,
+            size: 50,
             placeholder: 'Write your task here...',
             oninput: e => change(inputMsg(e.target.value))
           }),
-        button({
-            className: 'br-pill',
+        img({
+            className: 'br-pill pointer dim pa2 grow',
             type: 'button',
+            src: 'icons/plus.svg',
             onclick: () => change(addMsg())
-        }, String.fromCodePoint(0x2795))
+        })
     ]);
 }
 
@@ -47,11 +52,11 @@ function taskRow(change) {
     return function (task, index) {
         return div({className: 'shadow-4 pa2 ma1 flex dim ' + (task.done ? 'bg-washed-green' : 'bg-washed-red') },[
             div({className: 'pa1 ma1 fl w-5'}, [
-                a({className: 'br-pill pointer', onclick: () => change(markDoneMsg(index))} , task.done ? String.fromCodePoint(0x2705):String.fromCodePoint(0x1F532))
+                img({className: 'br-pill pointer', onclick: () => change(markDoneMsg(index)), src: task.done ? 'icons/check.svg':'icons/plus.svg'} )
             ]),
-            div({className: 'pa1 ma1 fl w-90 gray'},task.name),
+            div({className: 'pa1 ma1 fl w-90 gray ' + (task.done ? 'strike':'')},task.name),
             div({className: 'pa1 ma1 fl w-5'}, [
-                a({className: 'br-pill pointer', onclick: () => change(deleteMsg(index))} , "x")
+                img({className: 'br-pill pointer', onclick: () => change(deleteMsg(index)), src: 'icons/kebab-vertical.svg'})
             ])
         ]);
     }
