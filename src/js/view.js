@@ -25,15 +25,16 @@ function view (change, model) {
 }
 
 function taskForm(change, model) {
-    return form({className: 'flex'},[
+    return div({className: 'flex'},[
         div ({className: 'pa1 ma1 w-100'},[
             input({
                 type: 'text',
                 className: 'pa2 w-90 ba b b--white bg-white',
                 value: model.task,
                 size: 50,
-                placeholder: 'Write your task here...',
-                oninput: e => change(inputMsg(e.target.value))
+                placeholder: 'Write your task',
+                oninput: e => change(inputMsg(e.target.value)),
+                onkeyup: e =>  e.keyCode === 13 ? change(addMsg()) : void(0)
               }),
             img({
                 className: 'pointer dim pl2 pt2 dib w-5 grow',
