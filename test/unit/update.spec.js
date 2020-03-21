@@ -1,5 +1,5 @@
 import expect from "expect";
-import update, { deleteMsg, addMsg, inputMsg, MSG} from "../../src/js/update";
+import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, MSG } from "../../src/js/update";
 import defaultModel from "../../src/js/model";
 
 describe("App2 update", () => {
@@ -27,6 +27,14 @@ describe("App2 update", () => {
             expect(inputMsg(text)).toStrictEqual({
                 type: MSG.INPUT,
                 text
+            });
+        });
+
+        it("markDoneMsg", () => {
+            const index = 2;
+            expect(markDoneMsg(index)).toStrictEqual({
+                type: MSG.DONE,
+                index
             });
         });
     });
@@ -71,6 +79,23 @@ describe("App2 update", () => {
             const expected = {
                 ...defaultModel,
                 name: newInput
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("mark as done", () => {
+            const index = 1;
+            const msg = markDoneMsg(index);
+
+            const result = update(msg, defaultModel);
+            const expected = {
+                tasks: [
+                    { name: "Do something", done: false },
+                    { name: "Take a rest", done: true }
+                ],
+                name: '',
+                done: false
             };
 
             expect(result).toStrictEqual(expected);

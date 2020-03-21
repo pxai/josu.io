@@ -1,7 +1,8 @@
 export const MSG = {
   ADD: "add",
   DEL: "delete",
-  INPUT: "input"
+  INPUT: "input",
+  DONE: "done"
 };
 
 export function deleteMsg(index) {
@@ -24,6 +25,13 @@ export function addMsg() {
     }
 }
 
+export function markDoneMsg(index) {
+    return {
+        type: MSG.DONE,
+        index
+    }
+}
+
 export function update(msg, model) {
     switch (msg.type) {
         case MSG.DEL:
@@ -39,6 +47,9 @@ export function update(msg, model) {
                 ...model,
                 tasks: [...model.tasks, task]
             };
+        case MSG.DONE:
+            const tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, done: !task.done});
+            return {...model, tasks };
         default:
             return model;
     }

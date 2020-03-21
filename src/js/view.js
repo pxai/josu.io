@@ -1,6 +1,6 @@
 import hh from "hyperscript-helpers";
 import { h }from "virtual-dom";
-import { deleteMsg, inputMsg, addMsg } from "./update";
+import { deleteMsg, inputMsg, addMsg, markDoneMsg } from "./update";
 
 const {
     section, div, h3, button, pre,
@@ -9,7 +9,7 @@ const {
  } = hh(h);
 
 function view (change, model) {
-    return section({ className: 'mw6 mw6-ns center sans-serif pa3 ph5-ns' }, [
+    return section({ className: 'w6 mw6 mw6-ns center sans-serif pa3 ph5-ns' }, [
             h3({className: 'f3'},"✔️osu.io :: todo List"),
             taskForm(change, model),
             div([
@@ -22,10 +22,10 @@ function view (change, model) {
 
 function taskForm(change, model) {
     return form([
-        label("task"),
         input({
             type: 'text',
             value: model.task,
+            placeholder: 'Write your task here...',
             oninput: e => change(inputMsg(e.target.value))
           }),
         button({
@@ -39,7 +39,7 @@ function taskForm(change, model) {
 function taskTable(change, model) {
     return table([
         tr([
-            th("Task"), th("Done"), th("Del"),
+            th("Change"),th("Task"), th("Done"), th("Del"),
         ]),
         model.tasks.map(taskRow(change))
     ])
@@ -48,6 +48,9 @@ function taskTable(change, model) {
 function taskRow(change) {
     return function (task, index) {
         return tr([
+            td([
+                button({className: 'br-pill', onclick: () => change(markDoneMsg(index))} , task.done ? "v":"x")
+            ]),
             td(task.name),
             td(task.done ? "Done":""),
             td([
