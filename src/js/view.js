@@ -54,7 +54,7 @@ function taskTable(change, model) {
 
 function taskRow(change) {
     return function (task, index) {
-        return div({className: 'shadow-4 pa2 ma2 pv1 flex dim ' + (task.done ? '' : 'bg-white') },[
+        return div({className: 'shadow-4 pa2 ma2 pv1 br2 flex dim ' + (task.done ? '' : 'bg-white') },[
             div({className: 'pa1 ma1 fl w-5'}, [
                 img({className: 'br-pill pointer', onclick: () => change(markDoneMsg(index)), src: task.done ? 'icons/check.svg':'icons/plus.svg'} )
             ]),

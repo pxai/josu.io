@@ -12,7 +12,7 @@ const sourcemaps = require("gulp-sourcemaps");
 const mocha = require('gulp-mocha');
 
 function html() {
-  return src('src/**/index.html')
+  return src(['src/**/index.html','src/favicon.ico'])
     .pipe(dest('public'))
 }
 
