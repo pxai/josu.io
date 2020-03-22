@@ -5,7 +5,7 @@ import { deleteMsg, inputMsg, addMsg, markDoneMsg, markDeleteMsg } from "./updat
 const {
     section, div, h3, button, pre,
     form, img, input,
-    span, a
+    span, a, p
  } = hh(h);
 
 function view (change, model) {
@@ -19,7 +19,7 @@ function view (change, model) {
             div([
                 taskTable(change, model)
             ]),
-            div({style: 'display: block'},[a({href:"https://github.com/pxai/josu.io", className: 'tc'},"josu.io")]),
+            p({className: 'tc'},[a({href:"https://github.com/pxai/josu.io", className: 'tc'},"josu.io")]),
             div({style: 'display: none'},[pre(JSON.stringify(model, false, 2))])
         ]
     );
@@ -59,9 +59,9 @@ function taskRow(change) {
             div({className: 'pa1 ma1 fl w-5'}, [
                 img({className: 'br-pill pointer', onclick: () => change(markDoneMsg(index)), src: task.done ? 'icons/check.svg':'icons/plus.svg'} )
             ]),
-            div({className: 'pa1 ma1 fl w-90 grow gray ' + (task.done ? 'strike':'')},task.name),
-            div({className: 'pa1 ma1 fl w-5 grow'}, 
-                task.preDelete 
+            div({className: 'pa1 ma1 fl w-90 gray ' + (task.done ? 'strike':'')},task.name),
+            div({className: 'pa1 ma1 fl w-5 grow'},
+                task.preDelete
                 ? [img({className: 'br-pill pa1 pointer ', title: 'Cancel!', onclick: () => change(markDeleteMsg(index)), src: 'icons/x.svg'}),
                     img({className: 'br-pill pa1 pointer', title: 'Delete?', onclick: () => change(deleteMsg(index)), src: 'icons/trashcan.svg'}) ]
                 : [img({className: 'br-pill pa1 pointer', title: 'Delete?', onclick: () => change(markDeleteMsg(index)), src: 'icons/trashcan.svg'}) ]
