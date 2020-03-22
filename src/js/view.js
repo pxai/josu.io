@@ -19,7 +19,8 @@ function view (change, model) {
             div([
                 taskTable(change, model)
             ]),
-            div({style: 'display: block'},[pre(JSON.stringify(model, false, 2))])
+            div({style: 'display: block'},[a({href:"https://github.com/pxai/josu.io", className: 'tc'},"josu.io")]),
+            div({style: 'display: none'},[pre(JSON.stringify(model, false, 2))])
         ]
     );
 }
