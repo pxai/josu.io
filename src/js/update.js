@@ -19,7 +19,8 @@ export function inputMsg(text) {
     }
 }
 
-export function addMsg() {
+export function addMsg(text) {
+    if (!text.trim()) { return; }
     return {
         type: MSG.ADD
     }

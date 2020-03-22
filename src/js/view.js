@@ -40,7 +40,7 @@ function taskForm(change, model) {
                 className: 'pointer dim pl2 pt2 dib w-5 grow',
                 type: 'button',
                 src: 'icons/plus.svg',
-                onclick: () => change(addMsg())
+                onclick: () => change(addMsg(model.name))
             })
         ])
     ]);
