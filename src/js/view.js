@@ -1,6 +1,6 @@
 import hh from "hyperscript-helpers";
 import { h }from "virtual-dom";
-import { deleteMsg, inputMsg, addMsg, markDoneMsg } from "./update";
+import { deleteMsg, inputMsg, addMsg, markDoneMsg, markDeleteMsg } from "./update";
 
 const {
     section, div, h3, button, pre,
@@ -19,7 +19,7 @@ function view (change, model) {
             div([
                 taskTable(change, model)
             ]),
-            div({style: 'display: none'},[pre(JSON.stringify(model, false, 2))])
+            div({style: 'display: block'},[pre(JSON.stringify(model, false, 2))])
         ]
     );
 }
@@ -34,7 +34,7 @@ function taskForm(change, model) {
                 size: 50,
                 placeholder: 'Write your task',
                 oninput: e => change(inputMsg(e.target.value)),
-                onkeyup: e =>  e.keyCode === 13 ? change(addMsg()) : void(0)
+                onkeyup: e =>  e.keyCode === 13 ? change(addMsg(model.name)) : void(0)
               }),
             img({
                 className: 'pointer dim pl2 pt2 dib w-5 grow',
@@ -58,10 +58,13 @@ function taskRow(change) {
             div({className: 'pa1 ma1 fl w-5'}, [
                 img({className: 'br-pill pointer', onclick: () => change(markDoneMsg(index)), src: task.done ? 'icons/check.svg':'icons/plus.svg'} )
             ]),
-            div({className: 'pa1 ma1 fl w-90 gray ' + (task.done ? 'strike':'')},task.name),
-            div({className: 'pa1 ma1 fl w-5'}, [
-                img({className: 'br-pill pointer', title: 'Delete!', onclick: () => change(deleteMsg(index)), src: 'icons/trashcan.svg'})
-            ])
+            div({className: 'pa1 ma1 fl w-90 grow gray ' + (task.done ? 'strike':'')},task.name),
+            div({className: 'pa1 ma1 fl w-5 grow'}, 
+                task.preDelete 
+                ? [img({className: 'br-pill pa1 pointer ', title: 'Cancel!', onclick: () => change(markDeleteMsg(index)), src: 'icons/x.svg'}),
+                    img({className: 'br-pill pa1 pointer', title: 'Delete?', onclick: () => change(deleteMsg(index)), src: 'icons/trashcan.svg'}) ]
+                : [img({className: 'br-pill pa1 pointer', title: 'Delete?', onclick: () => change(markDeleteMsg(index)), src: 'icons/trashcan.svg'}) ]
+            )
         ]);
     }
 }

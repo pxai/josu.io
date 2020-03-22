@@ -1,5 +1,5 @@
 import expect from "expect";
-import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, MSG } from "../../src/js/update";
+import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, markDeleteMsg, MSG } from "../../src/js/update";
 import defaultModel from "../../src/js/model";
 
 describe("Josu.io update", () => {
@@ -50,6 +50,14 @@ describe("Josu.io update", () => {
                 index
             });
         });
+
+        it("markDeleteMsg", () => {
+            const index = 2;
+            expect(markDeleteMsg(index)).toStrictEqual({
+                type: MSG.PREDELETE,
+                index
+            });
+        });
     });
 
     describe("Update function", () => {
@@ -60,7 +68,7 @@ describe("Josu.io update", () => {
             const result = update(msg, defaultModel);
             const expected = {
                 tasks: [
-                    { name: "Do something", done: false }
+                    { name: "Do something", done: false, preDelete: false }
                 ],
                 name: '',
                 done: false
@@ -72,7 +80,7 @@ describe("Josu.io update", () => {
         it("add", () => {
             const text = "New task";
             const msg = addMsg(text);
-            const newTask = { name: text, done: false };
+            const newTask = { name: text, done: false, preDelete: false };
             const model = { ...defaultModel, ...newTask  };
 
             const result = update(msg, model);
@@ -105,8 +113,8 @@ describe("Josu.io update", () => {
             const result = update(msg, defaultModel);
             const expected = {
                 tasks: [
-                    { name: "Do something", done: false },
-                    { name: "Take a rest", done: true }
+                    { name: "Do something", done: false, preDelete: false },
+                    { name: "Take a rest", done: true, preDelete: false }
                 ],
                 name: '',
                 done: false

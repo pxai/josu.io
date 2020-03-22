@@ -2,7 +2,8 @@ export const MSG = {
   ADD: "add",
   DEL: "delete",
   INPUT: "input",
-  DONE: "done"
+  DONE: "done",
+  PREDELETE: "predelete"
 };
 
 export function deleteMsg(index) {
@@ -33,7 +34,15 @@ export function markDoneMsg(index) {
     }
 }
 
+export function markDeleteMsg(index) {
+    return {
+        type: MSG.PREDELETE,
+        index
+    }
+}
+
 export function update(msg, model) {
+    let tasks = [];
     switch (msg.type) {
         case MSG.DEL:
             return {
@@ -43,14 +52,18 @@ export function update(msg, model) {
         case MSG.INPUT:
             return { ...model, name: msg.text }
         case MSG.ADD:
-            const task = { name: model.name, done: false };
+            console.log("About to add!! ");
+            const task = { name: model.name, done: false, preDelete: false };
             return {
                 ...model,
                 name: "",
                 tasks: [...model.tasks, task].sort((t1,t2) => t1.done-t2.done )
             };
         case MSG.DONE:
-            const tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, done: !task.done}).sort((t1,t2) => t1.done-t2.done );
+            tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, done: !task.done}).sort((t1,t2) => t1.done-t2.done );
+            return {...model, tasks };
+        case MSG.PREDELETE:
+            tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, preDelete: !task.preDelete}).sort((t1,t2) => t1.done-t2.done );
             return {...model, tasks };
         default:
             return model;
