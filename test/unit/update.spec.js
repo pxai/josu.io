@@ -16,9 +16,22 @@ describe("Josu.io update", () => {
             });
         });
 
-        it("addMsg", () => {
-            expect(addMsg()).toStrictEqual({
-                type: MSG.ADD
+        describe("addMsg function", () => {
+            it("addMsg", () => {
+                const text = "new";
+                expect(addMsg(text)).toStrictEqual({
+                    type: MSG.ADD
+                });
+            });
+
+            it("addMsg empty", () => {
+                const text = "";
+                expect(addMsg(text)).toStrictEqual(undefined);
+            });
+
+            it("addMsg empty string", () => {
+                const text = "  ";
+                expect(addMsg(text)).toStrictEqual(undefined);
             });
         });
 
@@ -57,9 +70,9 @@ describe("Josu.io update", () => {
         });
 
         it("add", () => {
-            const index = 1;
-            const msg = addMsg(index);
-            const newTask = { name: "New task", done: false };
+            const text = "New task";
+            const msg = addMsg(text);
+            const newTask = { name: text, done: false };
             const model = { ...defaultModel, ...newTask  };
 
             const result = update(msg, model);
