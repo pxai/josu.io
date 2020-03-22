@@ -30,7 +30,7 @@ function taskForm(change, model) {
             input({
                 type: 'text',
                 className: 'pa2 w-90 ba b b--white bg-white',
-                value: model.task,
+                value: model.name,
                 size: 50,
                 placeholder: 'Write your task',
                 oninput: e => change(inputMsg(e.target.value)),
@@ -60,7 +60,7 @@ function taskRow(change) {
             ]),
             div({className: 'pa1 ma1 fl w-90 gray ' + (task.done ? 'strike':'')},task.name),
             div({className: 'pa1 ma1 fl w-5'}, [
-                img({className: 'br-pill pointer', title: 'Delete!', onclick: () => change(deleteMsg(index)), src: 'icons/kebab-vertical.svg'})
+                img({className: 'br-pill pointer', title: 'Delete!', onclick: () => change(deleteMsg(index)), src: 'icons/trashcan.svg'})
             ])
         ]);
     }

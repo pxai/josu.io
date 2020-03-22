@@ -65,6 +65,7 @@ describe("Josu.io update", () => {
             const result = update(msg, model);
             const expected = {
                 ...model,
+                name: "",
                 tasks: [ ...defaultModel.tasks, newTask ]
             };
 

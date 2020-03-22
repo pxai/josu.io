@@ -45,6 +45,7 @@ export function update(msg, model) {
             const task = { name: model.name, done: false };
             return {
                 ...model,
+                name: "",
                 tasks: [...model.tasks, task].sort((t1,t2) => t1.done-t2.done )
             };
         case MSG.DONE:
