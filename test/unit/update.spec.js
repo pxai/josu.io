@@ -67,9 +67,7 @@ describe("Josu.io update", () => {
 
             const result = update(msg, defaultModel);
             const expected = {
-                tasks: [
-                    { name: "Do something", done: false, preDelete: false }
-                ],
+                tasks: [],
                 name: '',
                 done: false
             };
@@ -107,14 +105,17 @@ describe("Josu.io update", () => {
         });
 
         it("mark as done", () => {
-            const index = 1;
-            const msg = markDoneMsg(index);
+            const index = 0;
+            const text = "New task";
+            defaultModel.name = text;
+            let msg = addMsg(text);
+            let result = update(msg, defaultModel);
 
-            const result = update(msg, defaultModel);
+            msg = markDoneMsg(index);
+            result = update(msg, result);
             const expected = {
                 tasks: [
-                    { name: "Do something", done: false, preDelete: false },
-                    { name: "Take a rest", done: true, preDelete: false }
+                    { name: text, done: true, preDelete: false },
                 ],
                 name: '',
                 done: false
