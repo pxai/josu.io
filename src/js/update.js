@@ -52,7 +52,6 @@ export function update(msg, model) {
         case MSG.INPUT:
             return { ...model, name: msg.text }
         case MSG.ADD:
-            console.log("About to add!! ");
             const task = { name: model.name, done: false, preDelete: false };
             return {
                 ...model,
