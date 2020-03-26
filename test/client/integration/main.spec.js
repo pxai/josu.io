@@ -1,6 +1,6 @@
 describe.only('Main Content', function () {
   beforeEach(() => {
-    cy.visit('http://localhost:8080');
+    cy.visit('http://localhost:3000');
   });
 
   it('cy.document() - get the document object', () => {
@@ -15,6 +15,6 @@ describe.only('Main Content', function () {
   });
 
   it('shows Header title', () => {
-    cy.get('h3').should('have.text', 'josu.io todo app');
+    cy.get('h3').should('have.text', 'osu.io todo list');
   });
 });

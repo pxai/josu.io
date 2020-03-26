@@ -4,11 +4,13 @@
   "description": "Josu todo list page",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha test/unit/**/*.spec.js",
+    "test": "npm run unit && npm run client",
+    "unit": "npx mocha test/unit/**/*.spec.js",
     "build": "gulp build",
     "cypress:open": "npx cypress open",
     "cypress:run": "npx cypress run",
-    "client": "start-server-and-test start http-get://localhost:8080 cypress:run"
+    "start": "gulp",
+    "client": "start-server-and-test start http-get://localhost:3000 cypress:run"
   },
   "repository": {
     "type": "git",
