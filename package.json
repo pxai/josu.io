@@ -4,8 +4,13 @@
   "description": "Josu todo list page",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha test/unit/**/*.spec.js",
-    "build": "gulp build"
+    "test": "npm run unit && npm run client",
+    "unit": "npx mocha test/unit/**/*.spec.js",
+    "build": "gulp build",
+    "cypress:open": "npx cypress open",
+    "cypress:run": "npx cypress run",
+    "start": "gulp",
+    "client": "start-server-and-test start http-get://localhost:3000 cypress:run"
   },
   "repository": {
     "type": "git",
@@ -38,6 +43,7 @@
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.7",
     "browserify": "^16.2.2 ",
+    "cypress": "^4.2.0",
     "del": "^5.1.0",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
@@ -58,6 +64,7 @@
     "jsdom-global": "3.0.2",
     "mocha": "^7.0.0",
     "sinon": "^9.0.0",
+    "start-server-and-test": "^1.10.11",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "virtual-dom": "^2.1.1"

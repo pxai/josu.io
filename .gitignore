@@ -1,4 +1,6 @@
 package-lock.json
+test/client/screenshots
+test/client/examples
 public
 # Logs
 logs
