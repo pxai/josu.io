@@ -21,6 +21,11 @@ function icons() {
     .pipe(dest('public/icons'))
 }
 
+function img() {
+  return src('src/img/*.*')
+    .pipe(dest('public/img'))
+}
+
 function css() {
   return src('src/**/css/*.css')
     .pipe(minifyCSS())
@@ -83,6 +88,7 @@ function watchFiles() {
   watch("./src/**/js/*", series(build, browserSyncReload ));
   watch("./src/index.html", series(html, browserSyncReload ));
   watch("./src/icons/*", series(icons, browserSyncReload ));
+  watch("./src/img/*", series(img, browserSyncReload ));
   watch("./src/**/css/*", series(css, browserSyncReload ));
   watch("./test/**/*.spec.js", test)
 }
@@ -90,6 +96,6 @@ function watchFiles() {
 exports.css = css;
 exports.html = html;
 
-const build = series(clean, parallel(html, icons, css, js));
+const build = series(clean, parallel(html, img, icons, css, js));
 exports.default = series( build, parallel(watchFiles, browserSync));
 exports.build = build;
