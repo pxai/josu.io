@@ -38,7 +38,7 @@ function taskForm(change, model) {
                 onkeyup: e =>  e.keyCode === 13 ? change(addMsg(model.name)) : void(0)
               }),
             img({
-                className: 'pointer dim pl2 pt2 dib w-5 grow',
+                className: 'pointer fg-white dim pl2 pt2 dib w-5 grow',
                 type: 'button',
                 src: 'icons/plus.svg',
                 onclick: () => change(addMsg(model.name))
