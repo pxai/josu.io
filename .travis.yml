@@ -1,7 +1,7 @@
 ---
 language: node_js
 node_js:
-  - 10
+  - 12
 cache:
   npm: true
   directories:
@@ -9,4 +9,5 @@ cache:
     - ~/.cache
 
 install:
-  - npm ci
+  - $(npm bin)/cypress install
+  - npm test
