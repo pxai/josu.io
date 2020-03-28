@@ -5,21 +5,21 @@ import { deleteMsg, inputMsg, addMsg, markDoneMsg, markDeleteMsg, dropOverMsg } 
 const {
     section, div, h3, button, pre,
     form, img, input,
-    span, a, p
+    span, a, p, audio, source
  } = hh(h);
 
 function view (change, model) {
     return section({ className: 'center sans-serif pa3 ph5-ns' }, [
             div ({className:'flex'},[img({src: 'icons/checklist.svg', className:' bg-white center br-100 pa1 ba b--black-10 h3 w3'})]),
             h3({className: 'f3 tc'}, ([
-                img({src: 'icons/check.svg'}),
+                img({src: 'icons/check_w.svg'}),
                 "osu.io todo list"
             ])),
             taskForm(change, model),
             div([
                 taskTable(change, model)
             ]),
-            p({className: 'tc'},[a({href:"https://github.com/pxai/josu.io", className: 'tc'},"josu.io")]),
+            p({className: 'tc'},[a({href:"https://github.com/pxai/josu.io", className: 'tc white'},"josu.io")]),
             div({style: 'display: none'},[pre(JSON.stringify(model, false, 2))])
         ]
     );
@@ -40,7 +40,7 @@ function taskForm(change, model) {
             img({
                 className: 'pointer fg-white dim pl2 pt2 dib w-5 grow',
                 type: 'button',
-                src: 'icons/plus.svg',
+                src: 'icons/plus_w.svg',
                 onclick: () => change(addMsg(model.name))
             })
         ])
@@ -49,6 +49,10 @@ function taskForm(change, model) {
 
 function taskTable(change, model) {
     return div([
+        model.tasks.length && model.tasks.every(task => task.done) ? div ({className:'flex'},[
+            audio({autoplay: true},[source({src: 'img/nyan_cat.mp3', type: 'audio/mpeg'})]),
+            img({src: 'img/nyan.gif', className:'center'})
+        ]): "",
         model.tasks.map(taskRow(change))
     ])
 }
