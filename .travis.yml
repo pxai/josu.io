@@ -1,8 +1,9 @@
---- 
-cache: 
-  directories: 
+---
+cache:
+  npm: true
+  directories:
     - node_modules
+    - ~/.cache
 language: node_js
-node_js: 
+node_js:
   - "12"
-
