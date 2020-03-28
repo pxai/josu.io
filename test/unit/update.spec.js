@@ -1,5 +1,6 @@
 import expect from "expect";
-import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, markDeleteMsg, MSG } from "../../src/js/update";
+import sinon from "sinon";
+import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, markDeleteMsg, dropOverMsg, MSG } from "../../src/js/update";
 import defaultModel from "../../src/js/model";
 
 describe("Josu.io update", () => {
@@ -26,12 +27,16 @@ describe("Josu.io update", () => {
 
             it("addMsg empty", () => {
                 const text = "";
-                expect(addMsg(text)).toStrictEqual(undefined);
+                expect(addMsg(text)).toStrictEqual({
+                    type: ""
+                });
             });
 
             it("addMsg empty string", () => {
                 const text = "  ";
-                expect(addMsg(text)).toStrictEqual(undefined);
+                expect(addMsg(text)).toStrictEqual({
+                    type: ""
+                });
             });
         });
 
@@ -56,6 +61,24 @@ describe("Josu.io update", () => {
             expect(markDeleteMsg(index)).toStrictEqual({
                 type: MSG.PREDELETE,
                 index
+            });
+        });
+
+        describe("dropOverMsg function", () => {
+            it("dropOverMsg", () => {
+                const event = { preventDefault: sinon.spy(), dataTransfer: { getData:  sinon.stub().returns(5) } };
+                expect(dropOverMsg(event, 4)).toStrictEqual({
+                    type: MSG.DROP,
+                    x: 5,
+                    y: 4
+                });
+            });
+
+            it("dropOverMsg without origin", () => {
+                const event = { preventDefault: sinon.spy(), dataTransfer: { getData:  sinon.stub().returns("") } };
+                expect(dropOverMsg(event, 4)).toStrictEqual({
+                    type: ""
+                });
             });
         });
     });
@@ -116,6 +139,35 @@ describe("Josu.io update", () => {
             const expected = {
                 tasks: [
                     { name: text, done: true, preDelete: false },
+                ],
+                name: '',
+                done: false
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("drag and drop", () => {
+            const event = { preventDefault: sinon.spy(), dataTransfer: { getData:  sinon.stub().returns(2) } };
+            const destiny = 0;
+            const model = {
+                tasks: [
+                    { name: "Hello", done: false, preDelete: false },
+                    { name: "Bye", done: false, preDelete: false },
+                    { name: "See you", done: true, preDelete: false }
+                ],
+                name: '',
+                done: false
+            }
+
+            let msg = dropOverMsg(event, destiny);
+            let result = update(msg, model);
+
+            const expected = {
+                tasks: [
+                    { name: "See you", done: true, preDelete: false },
+                    { name: "Bye", done: false, preDelete: false },
+                    { name: "Hello", done: false, preDelete: false }
                 ],
                 name: '',
                 done: false
