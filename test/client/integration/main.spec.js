@@ -1,11 +1,12 @@
-describe.only('Main Content', function () {
+import * as cy from "cypress";
+
+describe('Main Content', function () {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
   });
 
-  it('cy.document() - get the document object', () => {
-    cy
-      .document()
+  it('cy.document() - ge the document object', () => {
+      cy.document()
       .should('have.property', 'charset')
       .and('eq', 'UTF-8');
   });

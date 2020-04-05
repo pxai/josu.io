@@ -5,6 +5,7 @@ export const MSG = {
   DONE: "done",
   PREDELETE: "predelete",
   DROP: "drop",
+  EDIT: "edit"
 };
 
 export function deleteMsg(index) {
@@ -31,6 +32,13 @@ export function addMsg(text) {
 export function markDoneMsg(index) {
     return {
         type: MSG.DONE,
+        index
+    }
+}
+
+export function markEditMsg(index) {
+    return {
+        type: MSG.EDIT,
         index
     }
 }

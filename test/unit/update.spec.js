@@ -1,6 +1,6 @@
 import expect from "expect";
 import sinon from "sinon";
-import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, markDeleteMsg, dropOverMsg, MSG } from "../../src/js/update";
+import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, markEditMsg, markDeleteMsg, dropOverMsg, MSG } from "../../src/js/update";
 import defaultModel from "../../src/js/model";
 
 describe("Josu.io update", () => {
@@ -52,6 +52,14 @@ describe("Josu.io update", () => {
             const index = 2;
             expect(markDoneMsg(index)).toStrictEqual({
                 type: MSG.DONE,
+                index
+            });
+        });
+
+        it("markEditMsg", () => {
+            const index = 2;
+            expect(markEditMsg(index)).toStrictEqual({
+                type: MSG.EDIT,
                 index
             });
         });
