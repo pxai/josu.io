@@ -85,6 +85,9 @@ export function update(msg, model) {
         case MSG.PREDELETE:
             tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, preDelete: !task.preDelete}).sort((t1,t2) => t1.done-t2.done );
             return {...model, tasks };
+        case MSG.EDIT:
+            tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, edit: !task.edit}).sort((t1,t2) => t1.done-t2.done );
+            return {...model, tasks };
         case MSG.DROP:
             tasks = [ ...model.tasks ];
             [tasks[msg.y], tasks[msg.x]] = [tasks[msg.x], tasks[msg.y]];

@@ -109,7 +109,7 @@ describe("Josu.io update", () => {
         it("add", () => {
             const text = "New task";
             const msg = addMsg(text);
-            const newTask = { name: text, done: false, preDelete: false };
+            const newTask = { name: text, done: false, preDelete: false, edit: false };
             const model = { ...defaultModel, ...newTask  };
 
             const result = update(msg, model);
@@ -146,7 +146,7 @@ describe("Josu.io update", () => {
             result = update(msg, result);
             const expected = {
                 tasks: [
-                    { name: text, done: true, preDelete: false },
+                    { name: text, done: true, preDelete: false, edit: false },
                 ],
                 name: '',
                 done: false
@@ -160,9 +160,38 @@ describe("Josu.io update", () => {
             const destiny = 0;
             const model = {
                 tasks: [
-                    { name: "Hello", done: false, preDelete: false },
-                    { name: "Bye", done: false, preDelete: false },
-                    { name: "See you", done: true, preDelete: false }
+                    { name: "Hello", done: false, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: false },
+                    { name: "See you", done: true, preDelete: false, edit: false }
+                ],
+                name: '',
+                done: false
+            }
+
+            let msg = dropOverMsg(event, destiny);
+            let result = update(msg, model);
+
+            const expected = {
+                tasks: [
+                    { name: "See you", done: true, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: false },
+                    { name: "Hello", done: false, preDelete: false, edit: false }
+                ],
+                name: '',
+                done: false
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("edits", () => {
+            const event = { preventDefault: sinon.spy(), dataTransfer: { getData:  sinon.stub().returns(2) } };
+            const destiny = 0;
+            const model = {
+                tasks: [
+                    { name: "Hello", done: false, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: false },
+                    { name: "See you", done: true, preDelete: false, edit: false }
                 ],
                 name: '',
                 done: false
