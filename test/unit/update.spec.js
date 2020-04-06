@@ -186,7 +186,7 @@ describe("Josu.io update", () => {
 
         it("edits", () => {
             const event = { preventDefault: sinon.spy(), dataTransfer: { getData:  sinon.stub().returns(2) } };
-            const destiny = 0;
+            const index = 1;
             const model = {
                 tasks: [
                     { name: "Hello", done: false, preDelete: false, edit: false },
@@ -197,14 +197,14 @@ describe("Josu.io update", () => {
                 done: false
             }
 
-            let msg = dropOverMsg(event, destiny);
+            let msg = markEditMsg(index);
             let result = update(msg, model);
 
             const expected = {
                 tasks: [
-                    { name: "See you", done: true, preDelete: false },
-                    { name: "Bye", done: false, preDelete: false },
-                    { name: "Hello", done: false, preDelete: false }
+                    { name: "Hello", done: true, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: true },
+                    { name: "See you", done: false, preDelete: false, edit: false }
                 ],
                 name: '',
                 done: false
