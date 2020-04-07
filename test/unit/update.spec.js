@@ -184,8 +184,7 @@ describe("Josu.io update", () => {
             expect(result).toStrictEqual(expected);
         });
 
-        it("edits", () => {
-            const event = { preventDefault: sinon.spy(), dataTransfer: { getData:  sinon.stub().returns(2) } };
+        it.only("edits", () => {
             const index = 1;
             const model = {
                 tasks: [
@@ -202,9 +201,9 @@ describe("Josu.io update", () => {
 
             const expected = {
                 tasks: [
-                    { name: "Hello", done: true, preDelete: false, edit: false },
+                    { name: "Hello", done: false, preDelete: false, edit: false },
                     { name: "Bye", done: false, preDelete: false, edit: true },
-                    { name: "See you", done: false, preDelete: false, edit: false }
+                    { name: "See you", done: true, preDelete: false, edit: false }
                 ],
                 name: '',
                 done: false

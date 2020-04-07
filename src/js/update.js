@@ -50,7 +50,6 @@ export function markDeleteMsg(index) {
     }
 }
 
-
 export function dropOverMsg(e, destiny) {
     e.preventDefault();
     if (!e.dataTransfer.getData("text")) { return { type: '' } }
