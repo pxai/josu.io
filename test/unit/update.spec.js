@@ -184,7 +184,35 @@ describe("Josu.io update", () => {
             expect(result).toStrictEqual(expected);
         });
 
-        it.only("edits", () => {
+        it("marks as deleted", () => {
+            const index = 1;
+            const model = {
+                tasks: [
+                    { name: "Hello", done: false, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: false },
+                    { name: "See you", done: true, preDelete: false, edit: false }
+                ],
+                name: '',
+                done: false
+            }
+
+            let msg = markDeleteMsg(index);
+            let result = update(msg, model);
+
+            const expected = {
+                tasks: [
+                    { name: "Hello", done: false, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: true, edit: false },
+                    { name: "See you", done: true, preDelete: false, edit: false }
+                ],
+                name: '',
+                done: false
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("edits", () => {
             const index = 1;
             const model = {
                 tasks: [
