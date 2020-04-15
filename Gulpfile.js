@@ -62,7 +62,7 @@ function lint () {
 }
 
 function test () {
-  return src("./test/**/*.spec.js", {read: false})
+  return src("./test/unit/**/*.spec.js", {read: false})
       .pipe(mocha({reporter: 'nyan'}));
 }
 
