@@ -18,4 +18,8 @@ describe('Main Content', function () {
   it('shows Header title', () => {
     cy.get('h3').should('have.text', 'osu.io todo list');
   });
+
+  it('has an input', () => {
+    cy.get('input').should('have.placeholder', 'osu.io todo list');
+  });
 });
