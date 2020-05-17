@@ -74,4 +74,23 @@ function taskRow(change) {
     }
 }
 
+function taskEdit(task, change) {
+    return div ({className: 'pa1 ma1 w-100'},[
+        input({
+            type: 'text',
+            className: 'pa2 w-90 ba b b--white bg-white',
+            value: task.name,
+            size: 50,
+            oninput: e => change(inputMsg(e.target.value)),
+            onkeyup: e =>  e.keyCode === 13 ? change(addMsg(model.name)) : void(0)
+          }),
+        img({
+            className: 'pointer fg-white dim pl2 pt2 dib w-5 grow',
+            type: 'button',
+            src: 'icons/plus_w.svg',
+            onclick: () => change(addMsg(model.name))
+        })
+    ])
+}
+
 export default view;

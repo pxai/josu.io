@@ -1,6 +1,6 @@
 import expect from "expect";
 import sinon from "sinon";
-import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, markDeleteMsg, dropOverMsg, MSG } from "../../src/js/update";
+import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, markEditMsg, markDeleteMsg, dropOverMsg, MSG } from "../../src/js/update";
 import defaultModel from "../../src/js/model";
 
 describe("Josu.io update", () => {
@@ -56,6 +56,14 @@ describe("Josu.io update", () => {
             });
         });
 
+        it("markEditMsg", () => {
+            const index = 2;
+            expect(markEditMsg(index)).toStrictEqual({
+                type: MSG.EDIT,
+                index
+            });
+        });
+
         it("markDeleteMsg", () => {
             const index = 2;
             expect(markDeleteMsg(index)).toStrictEqual({
@@ -101,7 +109,7 @@ describe("Josu.io update", () => {
         it("add", () => {
             const text = "New task";
             const msg = addMsg(text);
-            const newTask = { name: text, done: false, preDelete: false };
+            const newTask = { name: text, done: false, preDelete: false, edit: false };
             const model = { ...defaultModel, ...newTask  };
 
             const result = update(msg, model);
@@ -138,7 +146,7 @@ describe("Josu.io update", () => {
             result = update(msg, result);
             const expected = {
                 tasks: [
-                    { name: text, done: true, preDelete: false },
+                    { name: text, done: true, preDelete: false, edit: false },
                 ],
                 name: '',
                 done: false
@@ -152,9 +160,9 @@ describe("Josu.io update", () => {
             const destiny = 0;
             const model = {
                 tasks: [
-                    { name: "Hello", done: false, preDelete: false },
-                    { name: "Bye", done: false, preDelete: false },
-                    { name: "See you", done: true, preDelete: false }
+                    { name: "Hello", done: false, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: false },
+                    { name: "See you", done: true, preDelete: false, edit: false }
                 ],
                 name: '',
                 done: false
@@ -165,9 +173,65 @@ describe("Josu.io update", () => {
 
             const expected = {
                 tasks: [
-                    { name: "See you", done: true, preDelete: false },
-                    { name: "Bye", done: false, preDelete: false },
-                    { name: "Hello", done: false, preDelete: false }
+                    { name: "See you", done: true, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: false },
+                    { name: "Hello", done: false, preDelete: false, edit: false }
+                ],
+                name: '',
+                done: false
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("marks as deleted", () => {
+            const index = 1;
+            const model = {
+                tasks: [
+                    { name: "Hello", done: false, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: false },
+                    { name: "See you", done: true, preDelete: false, edit: false }
+                ],
+                name: '',
+                done: false
+            }
+
+            let msg = markDeleteMsg(index);
+            let result = update(msg, model);
+
+            const expected = {
+                tasks: [
+                    { name: "Hello", done: false, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: true, edit: false },
+                    { name: "See you", done: true, preDelete: false, edit: false }
+                ],
+                name: '',
+                done: false
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("edits", () => {
+            const index = 1;
+            const model = {
+                tasks: [
+                    { name: "Hello", done: false, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: false },
+                    { name: "See you", done: true, preDelete: false, edit: false }
+                ],
+                name: '',
+                done: false
+            }
+
+            let msg = markEditMsg(index);
+            let result = update(msg, model);
+
+            const expected = {
+                tasks: [
+                    { name: "Hello", done: false, preDelete: false, edit: false },
+                    { name: "Bye", done: false, preDelete: false, edit: true },
+                    { name: "See you", done: true, preDelete: false, edit: false }
                 ],
                 name: '',
                 done: false

@@ -5,6 +5,7 @@ export const MSG = {
   DONE: "done",
   PREDELETE: "predelete",
   DROP: "drop",
+  EDIT: "edit"
 };
 
 export function deleteMsg(index) {
@@ -35,13 +36,19 @@ export function markDoneMsg(index) {
     }
 }
 
+export function markEditMsg(index) {
+    return {
+        type: MSG.EDIT,
+        index
+    }
+}
+
 export function markDeleteMsg(index) {
     return {
         type: MSG.PREDELETE,
         index
     }
 }
-
 
 export function dropOverMsg(e, destiny) {
     e.preventDefault();
@@ -65,7 +72,7 @@ export function update(msg, model) {
         case MSG.INPUT:
             return { ...model, name: msg.text }
         case MSG.ADD:
-            const task = { name: model.name, done: false, preDelete: false };
+            const task = { name: model.name, done: false, preDelete: false, edit: false };
             return {
                 ...model,
                 name: "",
@@ -76,6 +83,9 @@ export function update(msg, model) {
             return {...model, tasks };
         case MSG.PREDELETE:
             tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, preDelete: !task.preDelete}).sort((t1,t2) => t1.done-t2.done );
+            return {...model, tasks };
+        case MSG.EDIT:
+            tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, edit: !task.edit}).sort((t1,t2) => t1.done-t2.done );
             return {...model, tasks };
         case MSG.DROP:
             tasks = [ ...model.tasks ];
