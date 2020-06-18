@@ -18,6 +18,6 @@ describe('Main Content', function () {
   });
 
   it('has an input', () => {
-    cy.get('input').should('have.attr','placeholder', 'Write your text');
+    cy.get('input').should('have.attr','placeholder', 'Write your task');
   });
 });
