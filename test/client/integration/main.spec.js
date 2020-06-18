@@ -1,5 +1,3 @@
-import * as cy from "cypress";
-
 describe('Main Content', function () {
   beforeEach(() => {
     cy.visit('http://localhost:3000');
@@ -20,6 +18,6 @@ describe('Main Content', function () {
   });
 
   it('has an input', () => {
-    cy.get('input').should('have.placeholder', 'osu.io todo list');
+    cy.get('input').should('have.attr','placeholder', 'Write your text');
   });
 });
