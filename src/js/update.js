@@ -1,5 +1,6 @@
 export const MSG = {
   ADD: "add",
+  ADDMULTIPLE: "addMultiple",
   DEL: "delete",
   INPUT: "input",
   DONE: "done",
@@ -26,6 +27,14 @@ export function addMsg(text) {
     if (!text.trim()) { return { type: '' } }
     return {
         type: MSG.ADD
+    }
+}
+
+export function addMultipleMsg(text, splitBy) {
+    if (!text.trim()) { return { type: '' } }
+    return {
+        type: MSG.ADDMULTIPLE,
+        splitBy
     }
 }
 
@@ -77,6 +86,14 @@ export function update(msg, model) {
                 ...model,
                 name: "",
                 tasks: [...model.tasks, task].sort((t1,t2) => t1.done-t2.done )
+            };
+        case MSG.ADDMULTIPLE:
+            tasks = model.name.split(msg.splitBy).map( task => ({ name: model.name, done: false, preDelete: false, edit: false }));
+
+            return {
+                ...model,
+                name: "",
+                tasks: [...model.tasks, ...tasks].sort((t1,t2) => t1.done-t2.done )
             };
         case MSG.DONE:
             tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, done: !task.done}).sort((t1,t2) => t1.done-t2.done );

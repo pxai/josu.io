@@ -1,6 +1,6 @@
 import expect from "expect";
 import sinon from "sinon";
-import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, markEditMsg, markDeleteMsg, dropOverMsg, MSG } from "../../src/js/update";
+import update, { deleteMsg, addMsg, addMultipleMsg, inputMsg, markDoneMsg, markEditMsg, markDeleteMsg, dropOverMsg, MSG } from "../../src/js/update";
 import defaultModel from "../../src/js/model";
 
 describe("Josu.io update", () => {
@@ -35,6 +35,25 @@ describe("Josu.io update", () => {
             it("addMsg empty string", () => {
                 const text = "  ";
                 expect(addMsg(text)).toStrictEqual({
+                    type: ""
+                });
+            });
+        });
+
+        describe("addMultipleMsg function", () => {
+            it("addMsg", () => {
+                const text = "new";
+                const splitBy = ",";
+                expect(addMultipleMsg(text, splitBy)).toStrictEqual({
+                    type: MSG.ADDMULTIPLE,
+                    splitBy
+                });
+            });
+
+            it("addMsg empty string", () => {
+                const text = "  ";
+                const splitBy = ",";
+                expect(addMultipleMsg(text, splitBy)).toStrictEqual({
                     type: ""
                 });
             });
