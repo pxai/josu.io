@@ -1,6 +1,7 @@
 import hh from "hyperscript-helpers";
 import { h }from "virtual-dom";
 import { deleteMsg, inputMsg, addMsg, markDoneMsg, markDeleteMsg, dropOverMsg } from "./update";
+import { getSplitChar } from "./helpers";
 
 const {
     section, div, h3, button, pre,
