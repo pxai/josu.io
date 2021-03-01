@@ -23,8 +23,9 @@ export function inputMsg(text) {
     }
 }
 
-export function addMsg(text) {
+export function addMsg(text, splitBy="") {
     if (!text.trim()) { return { type: '' } }
+    if (splitBy !== "") return addMultipleMsg(text, splitBy);
     return {
         type: MSG.ADD
     }

@@ -38,6 +38,29 @@ describe("Josu.io update", () => {
                     type: ""
                 });
             });
+
+            it("addMsg with empty splitBy", () => {
+                const text = "new";
+                expect(addMsg(text, "")).toStrictEqual({
+                    type: MSG.ADD
+                });
+            });
+
+            it("addMsg empty and splitBy", () => {
+                const text = "";
+                expect(addMsg(text, ",")).toStrictEqual({
+                    type: ""
+                });
+            });
+
+            it("addMsg with splitBy", () => {
+                const text = "bat,bi,hiru";
+                const splitBy = ",";
+                expect(addMsg(text,splitBy)).toStrictEqual({
+                    type: MSG.ADDMULTIPLE,
+                    splitBy
+                });
+            });
         });
 
         describe("addMultipleMsg function", () => {
@@ -50,7 +73,7 @@ describe("Josu.io update", () => {
                 });
             });
 
-            it("addMsg empty string", () => {
+            it("addMultipleMsg empty string", () => {
                 const text = "  ";
                 const splitBy = ",";
                 expect(addMultipleMsg(text, splitBy)).toStrictEqual({
