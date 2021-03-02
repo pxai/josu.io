@@ -1,3 +1,5 @@
+import { getSplitChar } from "./helpers";
+
 export const MSG = {
   ADD: "add",
   ADDMULTIPLE: "addMultiple",
@@ -23,9 +25,9 @@ export function inputMsg(text) {
     }
 }
 
-export function addMsg(text, splitBy="") {
+export function addMsg(text) {
     if (!text.trim()) { return { type: '' } }
-    if (splitBy !== "") return addMultipleMsg(text, splitBy);
+    if (getSplitChar(text) !== "") return addMultipleMsg(text, getSplitChar(text));
     return {
         type: MSG.ADD
     }
@@ -89,7 +91,7 @@ export function update(msg, model) {
                 tasks: [...model.tasks, task].sort((t1,t2) => t1.done-t2.done )
             };
         case MSG.ADDMULTIPLE:
-            tasks = model.name.split(msg.splitBy).map( task => ({ name: model.name, done: false, preDelete: false, edit: false }));
+            tasks = model.name.split(msg.splitBy).map( task => ({ name: task.trim(), done: false, preDelete: false, edit: false }));
 
             return {
                 ...model,

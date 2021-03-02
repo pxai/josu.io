@@ -39,33 +39,35 @@ describe("Josu.io update", () => {
                 });
             });
 
-            it("addMsg with empty splitBy", () => {
-                const text = "new";
-                expect(addMsg(text, "")).toStrictEqual({
-                    type: MSG.ADD
-                });
-            });
-
-            it("addMsg empty and splitBy", () => {
-                const text = "";
-                expect(addMsg(text, ",")).toStrictEqual({
+            it.skip("addMsg empty with just splitBy", () => {
+                const text = ",,\n,";
+                expect(addMsg(text)).toStrictEqual({
                     type: ""
                 });
             });
 
             it("addMsg with splitBy", () => {
                 const text = "bat,bi,hiru";
-                const splitBy = ",";
-                expect(addMsg(text,splitBy)).toStrictEqual({
+
+                expect(addMsg(text)).toStrictEqual({
                     type: MSG.ADDMULTIPLE,
-                    splitBy
+                    splitBy: ","
+                });
+            });
+
+            it("addMsg with multiple splitBy", () => {
+                const text = "bat\nbi,hiru";
+
+                expect(addMsg(text)).toStrictEqual({
+                    type: MSG.ADDMULTIPLE,
+                    splitBy: "\n"
                 });
             });
         });
 
         describe("addMultipleMsg function", () => {
             it("addMsg", () => {
-                const text = "new";
+                const text = "bat, bi, hiru";
                 const splitBy = ",";
                 expect(addMultipleMsg(text, splitBy)).toStrictEqual({
                     type: MSG.ADDMULTIPLE,
@@ -159,6 +161,27 @@ describe("Josu.io update", () => {
                 ...model,
                 name: "",
                 tasks: [ ...defaultModel.tasks, newTask ]
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("add multiple", () => {
+            const text = "One, Two, Three";
+            const msg = addMultipleMsg(text, ",");
+            const newTasks = [
+              { name: "One", done: false, preDelete: false, edit: false },
+              { name: "Two", done: false, preDelete: false, edit: false },
+              { name: "Three", done: false, preDelete: false, edit: false }
+            ];
+            const model = { ...defaultModel, name: text  };
+
+            const result = update(msg, model);
+
+            const expected = {
+                ...model,
+                name: "",
+                tasks: [ ...defaultModel.tasks, ...newTasks ]
             };
 
             expect(result).toStrictEqual(expected);
