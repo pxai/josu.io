@@ -75,6 +75,7 @@ export function dropOverMsg(e, destiny) {
 
 export function update(msg, model) {
     let tasks = [];
+    const defaultModel = { name: "", done: false, preDelete: false, edit: false };
     switch (msg.type) {
         case MSG.DEL:
             return {
@@ -84,14 +85,14 @@ export function update(msg, model) {
         case MSG.INPUT:
             return { ...model, name: msg.text }
         case MSG.ADD:
-            const task = { name: model.name, done: false, preDelete: false, edit: false };
+            const task = { ...defaultModel, name: model.name };
             return {
                 ...model,
                 name: "",
                 tasks: [...model.tasks, task].sort((t1,t2) => t1.done-t2.done )
             };
         case MSG.ADDMULTIPLE:
-            tasks = model.name.split(msg.splitBy).map( task => ({ name: task.trim(), done: false, preDelete: false, edit: false }));
+            tasks = model.name.split(msg.splitBy).map( task => ({ ...defaultModel, name: task.trim() }));
 
             return {
                 ...model,
