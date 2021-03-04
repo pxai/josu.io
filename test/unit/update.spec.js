@@ -187,6 +187,58 @@ describe("Josu.io update", () => {
             expect(result).toStrictEqual(expected);
         });
 
+        describe("mark edit msg", () => {
+            it("mark edit msg", () => {
+                const index = 1;
+                const msg = markEditMsg(index);
+                const tasks = [
+                  { name: "One", done: false, preDelete: false, edit: false },
+                  { name: "Two", done: false, preDelete: false, edit: false },
+                  { name: "Three", done: false, preDelete: false, edit: false }
+                ];
+                const model = { ...defaultModel, tasks };
+
+                const result = update(msg, model);
+
+                const expected = {
+                    ...model,
+                    name: "",
+                    tasks: [
+                      { name: "One", done: false, preDelete: false, edit: false },
+                      { name: "Two", done: false, preDelete: false, edit: true },
+                      { name: "Three", done: false, preDelete: false, edit: false }
+                    ]
+                };
+
+                expect(result).toStrictEqual(expected);
+            });
+
+            it("toggle edit msg", () => {
+                const index = 1;
+                const msg = markEditMsg(index);
+                const tasks = [
+                  { name: "One", done: false, preDelete: false, edit: false },
+                  { name: "Two", done: false, preDelete: false, edit: true },
+                  { name: "Three", done: false, preDelete: false, edit: false }
+                ];
+                const model = { ...defaultModel, tasks };
+
+                const result = update(msg, model);
+
+                const expected = {
+                    ...model,
+                    name: "",
+                    tasks: [
+                      { name: "One", done: false, preDelete: false, edit: false },
+                      { name: "Two", done: false, preDelete: false, edit: false },
+                      { name: "Three", done: false, preDelete: false, edit: false }
+                    ]
+                };
+
+                expect(result).toStrictEqual(expected);
+            });
+        });
+
         it("input", () => {
             const newInput = "LOL";
             const msg = inputMsg(newInput);
@@ -203,9 +255,9 @@ describe("Josu.io update", () => {
         it("mark as done", () => {
             const index = 0;
             const text = "New task";
-            defaultModel.name = text;
+            const model = { ...defaultModel, name: text };
             let msg = addMsg(text);
-            let result = update(msg, defaultModel);
+            let result = update(msg, model);
 
             msg = markDoneMsg(index);
             result = update(msg, result);

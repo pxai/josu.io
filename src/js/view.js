@@ -1,6 +1,6 @@
 import hh from "hyperscript-helpers";
 import { h }from "virtual-dom";
-import { deleteMsg, inputMsg, addMsg, markDoneMsg, markDeleteMsg, dropOverMsg } from "./update";
+import { deleteMsg, inputMsg, addMsg, markDoneMsg, markDeleteMsg, markEditMsg, dropOverMsg } from "./update";
 
 const {
     section, div, h3, button, pre,
@@ -63,7 +63,11 @@ function taskRow(change) {
             div({className: 'pa1 ma1 fl w-5'}, [
                 img({className: 'br-pill pointer', onclick: () => change(markDoneMsg(index)), src: task.done ? 'icons/check.svg':'icons/plus.svg'} )
             ]),
-            div({className: 'pa1 ma1 fl w-90 gray ' + (task.done ? 'strike':'')},task.name),
+            div({className: 'pa1 ma1 fl w-90 gray ' + (task.done ? 'strike':''), ondblclick: () => change(markEditMsg(index))},
+                task.edit
+                ? "wow"
+                : task.name
+            ),
             div({className: 'pa1 ma1 fl w-5 grow'},
                 task.preDelete
                 ? [img({className: 'br-pill pa1 pointer ', title: 'Cancel!', onclick: () => change(markDeleteMsg(index)), src: 'icons/x.svg'}),
