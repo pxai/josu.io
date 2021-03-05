@@ -1,6 +1,6 @@
 import hh from "hyperscript-helpers";
 import { h }from "virtual-dom";
-import { deleteMsg, inputMsg, addMsg, markDoneMsg, markDeleteMsg, markEditMsg, dropOverMsg } from "./update";
+import { deleteMsg, inputMsg, addMsg, markDoneMsg, markDeleteMsg, markEditMsg, saveEditMsg, dropOverMsg } from "./update";
 
 const {
     section, div, h3, button, pre,
@@ -65,7 +65,13 @@ function taskRow(change) {
             ]),
             div({className: 'pa1 ma1 fl w-90 gray ' + (task.done ? 'strike':''), ondblclick: () => change(markEditMsg(index))},
                 task.edit
-                ? "wow"
+                ? input({
+                      className: 'pa2 w-90 ba b b--gray bg-white',
+                      value: task.name,
+                      size: 40,
+                      placeholder: 'Write your task',
+                      onkeyup: e =>  e.keyCode === 13 ? change(saveEditMsg(index, e.target.value)) : void(0)
+                  })
                 : task.name
             ),
             div({className: 'pa1 ma1 fl w-5 grow'},
