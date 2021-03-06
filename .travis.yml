@@ -11,4 +11,3 @@ cache:
 install:
   - npm i
   - $(npm bin)/cypress install
-  - npm test
