@@ -11,7 +11,7 @@
     "cypress:run": "npx cypress run",
     "start": "gulp",
     "client": "npx start-server-and-test start http-get://localhost:3000 cypress:run",
-    "markbuild": "COMMIT=`git rev-parse --short HEAD` sed  \"s/{buildId}/${COMMIT}/g\" public/index.html"
+    "markbuild": "COMMIT=`git rev-parse --short HEAD` DATE=`date` sed  \"s/{buildId}/${DATE}/g\" public/index.html"
   },
   "repository": {
     "type": "git",
