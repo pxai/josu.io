@@ -1,7 +1,7 @@
 {
   "name": "josu.io",
   "version": "1.0.0",
-  "description": "Josu todo list page",
+  "description": "Josu ToDo list page",
   "main": "index.js",
   "scripts": {
     "test": "npm run unit && npm run client",
