@@ -10,7 +10,7 @@
     "cypress:open": "npx cypress open",
     "cypress:run": "npx cypress run",
     "start": "gulp",
-    "client": "start-server-and-test start http-get://localhost:3000 cypress:run"
+    "client": "npx start-server-and-test start http-get://localhost:3000 cypress:run"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/pxai/josu.io#readme",
   "dependencies": {
+    "@babel/runtime": "^7.9.6",
     "core-js": "^3.6.1",
     "hyperscript": "^2.0.2",
     "hyperscript-helpers": "^3.0.3",
@@ -35,10 +36,11 @@
     "tachyons": "^4.11.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.7.7",
+    "@babel/core": "^7.7.0",
+    "@babel/plugin-transform-runtime": "^7.9.6",
     "@babel/polyfill": "^7.7.0",
     "@babel/preset-env": "^7.9.0",
-    "@babel/register": "^7.8.3",
+    "@babel/register": "^7.9.0",
     "babel-plugin-dynamic-import-node": "^2.3.0",
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.7",
@@ -60,11 +62,11 @@
     "gulp-mocha": "^7.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "jsdom": "16.2.0",
-    "jsdom-global": "3.0.2",
+    "jsdom": "^16.2.0",
+    "jsdom-global": "^3.0.2",
     "mocha": "^7.0.0",
     "sinon": "^9.0.0",
-    "start-server-and-test": "^1.10.11",
+    "start-server-and-test": "^1.11.0",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "virtual-dom": "^2.1.1"

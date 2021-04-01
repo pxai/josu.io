@@ -97,5 +97,5 @@ exports.css = css;
 exports.html = html;
 
 const build = series(clean, parallel(html, img, icons, css, js));
-exports.default = series( build, parallel(watchFiles, browserSync));
+exports.default = series( build, test, parallel(watchFiles, browserSync));
 exports.build = build;
