@@ -1,6 +1,6 @@
 import expect from "expect";
 import sinon from "sinon";
-import update, { deleteMsg, addMsg, inputMsg, markDoneMsg, markEditMsg, markDeleteMsg, dropOverMsg, MSG } from "../../src/js/update";
+import update, { deleteMsg, addMsg, addMultipleMsg, inputMsg, markDoneMsg, markEditMsg, markDeleteMsg, dropOverMsg, MSG } from "../../src/js/update";
 import defaultModel from "../../src/js/model";
 
 describe("Josu.io update", () => {
@@ -35,6 +35,50 @@ describe("Josu.io update", () => {
             it("addMsg empty string", () => {
                 const text = "  ";
                 expect(addMsg(text)).toStrictEqual({
+                    type: ""
+                });
+            });
+
+            it.skip("addMsg empty with just splitBy", () => {
+                const text = ",,\n,";
+                expect(addMsg(text)).toStrictEqual({
+                    type: ""
+                });
+            });
+
+            it("addMsg with splitBy", () => {
+                const text = "bat,bi,hiru";
+
+                expect(addMsg(text)).toStrictEqual({
+                    type: MSG.ADDMULTIPLE,
+                    splitBy: ","
+                });
+            });
+
+            it("addMsg with multiple splitBy", () => {
+                const text = "bat\nbi,hiru";
+
+                expect(addMsg(text)).toStrictEqual({
+                    type: MSG.ADDMULTIPLE,
+                    splitBy: "\n"
+                });
+            });
+        });
+
+        describe("addMultipleMsg function", () => {
+            it("addMsg", () => {
+                const text = "bat, bi, hiru";
+                const splitBy = ",";
+                expect(addMultipleMsg(text, splitBy)).toStrictEqual({
+                    type: MSG.ADDMULTIPLE,
+                    splitBy
+                });
+            });
+
+            it("addMultipleMsg empty string", () => {
+                const text = "  ";
+                const splitBy = ",";
+                expect(addMultipleMsg(text, splitBy)).toStrictEqual({
                     type: ""
                 });
             });
@@ -117,6 +161,27 @@ describe("Josu.io update", () => {
                 ...model,
                 name: "",
                 tasks: [ ...defaultModel.tasks, newTask ]
+            };
+
+            expect(result).toStrictEqual(expected);
+        });
+
+        it("add multiple", () => {
+            const text = "One, Two, Three";
+            const msg = addMultipleMsg(text, ",");
+            const newTasks = [
+              { name: "One", done: false, preDelete: false, edit: false },
+              { name: "Two", done: false, preDelete: false, edit: false },
+              { name: "Three", done: false, preDelete: false, edit: false }
+            ];
+            const model = { ...defaultModel, name: text  };
+
+            const result = update(msg, model);
+
+            const expected = {
+                ...model,
+                name: "",
+                tasks: [ ...defaultModel.tasks, ...newTasks ]
             };
 
             expect(result).toStrictEqual(expected);
