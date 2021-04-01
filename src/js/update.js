@@ -8,7 +8,8 @@ export const MSG = {
   DONE: "done",
   PREDELETE: "predelete",
   DROP: "drop",
-  EDIT: "edit"
+  EDIT: "edit",
+  SAVEEDIT: "saveEdit"
 };
 
 export function deleteMsg(index) {
@@ -52,6 +53,14 @@ export function markEditMsg(index) {
     return {
         type: MSG.EDIT,
         index
+    }
+}
+
+export function saveEditMsg(index, text) {
+    return {
+        type: MSG.SAVEEDIT,
+        index,
+        text
     }
 }
 
@@ -108,6 +117,13 @@ export function update(msg, model) {
         case MSG.EDIT:
             tasks = model.tasks.map( (task,i) => i !== msg.index ? task : { ...task, edit: !task.edit}).sort((t1,t2) => t1.done-t2.done );
             return {...model, tasks };
+        case MSG.SAVEEDIT:
+            const changedTasks = [...model.tasks];
+            changedTasks[msg.index] = { ...model.tasks[msg.index], edit: false, name: msg.text };
+            return {
+                ...model,
+                tasks: changedTasks
+            };
         case MSG.DROP:
             tasks = [ ...model.tasks ];
             [tasks[msg.y], tasks[msg.x]] = [tasks[msg.x], tasks[msg.y]];
