@@ -44,6 +44,10 @@ body { margin: 0;  }
 .nyan h3 {
     color: white;
 }
+
+footer {
+  font-size: 0.8em;
+}
 /**
  * Correct the font size and margin on `h1` elements within `section` and
  * `article` contexts in Chrome, Firefox, and Safari.
